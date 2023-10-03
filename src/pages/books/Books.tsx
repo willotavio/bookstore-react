@@ -6,12 +6,8 @@ import { Book } from "./BooksList";
 export const Books = () => {
   const { data: books, refetch: refecthBooks } = useQuery(['books'], () => {
     return Axios.get('http://localhost:8080/book').then((res) => {
-      const booksList = res.data;
-      booksList.forEach((book: Book) => {
-        book.releaseDate = book.releaseDate.split("T")[0];
-      });
-      console.log(booksList);
-      return booksList;
+      res.data.forEach((book: Book) => book.releaseDate = book.releaseDate.split("T")[0]);
+      return res.data;
     }).catch((err) => console.log(err));
   });
   

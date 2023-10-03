@@ -19,6 +19,7 @@ function App() {
         <Navbar />
         <QueryClientProvider client={client}>
           <Routes>
+            <Route path='/' element={<h1>Home</h1>}/>
             <Route path='/book' element={<Books />}/>
             <Route path='/author' element={<Authors />}/>
           </Routes>
