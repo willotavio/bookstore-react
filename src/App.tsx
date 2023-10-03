@@ -4,6 +4,7 @@ import { Authors } from './pages/authors/Authors';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/navbar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Login } from './pages/auth/Login';
 
 function App() {
   const client = new QueryClient({
@@ -22,6 +23,7 @@ function App() {
             <Route path='/' element={<h1>Home</h1>}/>
             <Route path='/book' element={<Books />}/>
             <Route path='/author' element={<Authors />}/>
+            <Route path='/login' element={<Login />} />
           </Routes>
         </QueryClientProvider>
       </Router>

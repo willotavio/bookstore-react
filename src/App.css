@@ -1,3 +1,13 @@
+/*https://www.realtimecolors.com/?colors=f9f5fa-050406-ba92c3-2a192e-9f68ac&fonts=Poppins-Poppins*/
+
+:root{
+  --text: #F9F5FA;
+  --background: #050406;
+  --primary: #BA92C3;
+  --secondary: #2A192E;
+  --accent: #9F68AC;
+}
+
 .App {
   text-align: center;
 }
@@ -8,8 +18,8 @@
   padding: 0;
 }
 body{
-  background-color: #060407;
-  color: #F9F5FA;
+  background-color: var(--background);
+  color: var(--text);
 }
 
 .listDefault{
@@ -26,18 +36,18 @@ body{
   padding: 1rem;
 }
 .listDefault table thead tr{
-  background-color: #2A192E;
+  background-color: var(--secondary);
   text-align: center;
 }
 
 .navbar{
   display: flex;
-  background-color: #2A192E;
+  background-color: var(--secondary);
   height: 3rem;
 }
 .navbar *{
   text-decoration: none;
-  color: white;
+  color: var(--text);
 }
 .navbar .link{
   margin: auto 0.5rem;
@@ -45,4 +55,36 @@ body{
 }
 .navbar .link:hover{
   opacity: 80%;
+}
+
+.loginForm{
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  margin: auto;
+  padding-top: 10rem;
+}
+.loginForm *{
+  margin-bottom: 1rem;
+}
+.loginForm input{
+  height: 3rem;
+}
+.loginForm input:focus{
+  outline: none;
+}
+.loginForm input[type='text'],
+.loginForm input[type='password']{
+  border: none;
+  border-bottom: 0.2rem solid var( --primary);
+  background-color: transparent;
+  color: var(--text);
+}
+.loginForm input[type='submit']{
+  background-color: var(--primary);
+  border: none;
+}
+.loginForm input[type='submit']:hover{
+  opacity: 80%;
+  cursor: pointer;
 }
