@@ -19,7 +19,7 @@ export const AuthorsList = (props: Props) => {
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>birthDate</th>
+            <th>Birth Date</th>
           </tr>
         </thead>
         <tbody>

@@ -1,4 +1,5 @@
 import '../../App.css';
+import { Author } from '../authors/AuthorsList';
 
 export interface Book{
   id: string,
@@ -10,11 +11,12 @@ export interface Book{
 }
 
 interface Props{
-  books: Book[]
+  books: Book[];
+  authors: Author[];
 }
 
 export const BooksList = (props: Props) => {
-  const { books } = props;
+  const { books, authors } = props;
   return(
     <div className='listDefault'>
       <table>
@@ -25,7 +27,7 @@ export const BooksList = (props: Props) => {
             <th>Synopsis</th>
             <th>Release Date</th>
             <th>Price</th>
-            <th>Author Id</th>
+            <th>Author</th>
           </tr>
         </thead>
         <tbody>
@@ -36,7 +38,9 @@ export const BooksList = (props: Props) => {
               <td>{book.synopsis}</td>
               <td>{book.releaseDate}</td>
               <td>{book.price}</td>
-              <td>{book.authorId}</td>
+              <td>{
+                  authors.filter((author) => author.id === book.authorId)[0].name
+                }</td>
             </tr>
           ))}
         </tbody>
