@@ -5,14 +5,14 @@ import { Book } from "./BooksList";
 import { Author } from "../authors/AuthorsList";
 
 export const Books = () => {
-  const { data: books, refetch: refecthBooks } = useQuery(['books'], () => {
-    return Axios.get('http://localhost:8080/book').then((res) => {
+  const { data: books, refetch: refecthBooks } = useQuery(['books'], async () => {
+    return await Axios.get('http://localhost:8080/book').then((res) => {
       res.data.forEach((book: Book) => book.releaseDate = book.releaseDate.split("T")[0]);
       return res.data;
     }).catch((err) => console.log(err));
   });
-  const { data: authors, refetch: refetchAuthors } = useQuery(['authors'], () => {
-    return Axios.get('http://localhost:8080/author').then((res) => {
+  const { data: authors, refetch: refetchAuthors } = useQuery(['authors'], async () => {
+    return await Axios.get('http://localhost:8080/author').then((res) => {
       res.data.forEach((author: Author) => author.birthDate = author.birthDate.split("T")[0]);
       return res.data;
     }).catch((err) => console.log(err));

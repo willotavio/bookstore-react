@@ -39,7 +39,7 @@ export const BooksList = (props: Props) => {
               <td>{book.releaseDate}</td>
               <td>{book.price}</td>
               <td>{
-                  authors.filter((author) => author.id === book.authorId)[0].name
+                  authors?.filter((author) => author.id === book.authorId)[0].name
                 }</td>
             </tr>
           ))}
