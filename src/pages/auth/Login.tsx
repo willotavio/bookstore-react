@@ -20,16 +20,15 @@ export const Login = () => {
   });
   const onSubmit = handleSubmit( async (data) => {
     return await Axios.post('http://localhost:8080/auth', data).then((res) => {
-      console.log(res.data.token);
-      localStorage.getItem('token') && localStorage.removeItem('token');
       localStorage.setItem('token', res.data.token);
+      window.dispatchEvent(new Event('storage'));
       navigate('/');
     })
     .catch((err) => console.log(err));
   });
   
   if(userLogged){
-    navigate('/');
+    return(<Navigate to='/'/>);
   }
 
   return(

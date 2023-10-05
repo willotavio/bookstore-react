@@ -7,12 +7,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Login } from './pages/auth/Login';
 import { createContext, Provider } from 'react';
 import { useIsAuth } from './utilities/useIsAuth';
+import { Users } from './pages/users/Users';
 
 interface AppContextTypes{
   userLogged?: boolean;
 }
 
-export const AppContext = createContext<AppContextTypes | {userLogged: null}>({userLogged: false});
+export const AppContext = createContext<AppContextTypes | {userLogged: null}>({userLogged: true});
 
 function App() {
   const client = new QueryClient({
@@ -28,19 +29,20 @@ function App() {
   return (
 
     <div className="App">
-      <AppContext.Provider value={{userLogged}}>
-        <Router>
-          <Navbar />
-          <QueryClientProvider client={client}>
-            <Routes>
-              <Route path='/' element={<h1>Home</h1>}/>
-              <Route path='/book' element={<Books />}/>
-              <Route path='/author' element={<Authors />}/>
-              <Route path='/login' element={<Login />} />
-            </Routes>
-          </QueryClientProvider>
-        </Router>
-      </AppContext.Provider>
+    <AppContext.Provider value={{userLogged}}>
+      <Router>
+        <Navbar />
+        <QueryClientProvider client={client}>
+          <Routes>
+            <Route path='/' element={<h1>Home</h1>}/>
+            <Route path='/book' element={<Books />}/>
+            <Route path='/author' element={<Authors />}/>
+            <Route path='/user' element={<Users />}/>
+            <Route path='/login' element={<Login />} />
+          </Routes>
+        </QueryClientProvider>
+      </Router>
+    </AppContext.Provider>
     </div>
   );
 }

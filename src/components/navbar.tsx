@@ -13,9 +13,12 @@ export const Navbar = () => {
     <div className='navbar'>
       <Link className='link' to='/'>Ж</Link>
       <Link className='link' to='/book'>Books</Link>
-      <Link className='link' to='/author'> Authors</Link>
+      <Link className='link' to='/author'>Authors</Link>
       { userLogged
-        ? <button onClick={() => [logout(), navigate('/')]}>Logout</button>
+        ? <>
+            <Link className='link' to={''} onClick={() => [logout(), navigate('/')]}>Logout</Link>
+            <Link className='link' to={'/user'}>Users</Link>
+          </>
         : <Link className='link' to='/login'>Login</Link>
       }  
     </div>

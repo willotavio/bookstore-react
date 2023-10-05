@@ -1,3 +1,4 @@
 export const logout = () => {
-  localStorage.removeItem('token');
+  localStorage.setItem('token', "");
+  window.dispatchEvent(new Event('storage'));
 }
