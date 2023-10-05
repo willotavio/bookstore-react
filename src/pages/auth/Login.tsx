@@ -20,6 +20,7 @@ export const Login = () => {
   });
   const onSubmit = handleSubmit( async (data) => {
     return await Axios.post('http://localhost:8080/auth', data).then((res) => {
+      localStorage.setItem('user', JSON.stringify(res.data.user));
       localStorage.setItem('token', res.data.token);
       window.dispatchEvent(new Event('storage'));
       navigate('/');
@@ -34,6 +35,7 @@ export const Login = () => {
   return(
     <div>
       <form onSubmit={onSubmit} className='loginForm'>
+        <h2>Login</h2>
         <input type='text' {...register('email')} placeholder='Email' autoComplete='off'/>
         <input type='password' {...register('password')} placeholder='Password' />
         <input type='submit' value='Login' />

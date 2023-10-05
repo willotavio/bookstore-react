@@ -4,6 +4,24 @@ import '../../App.css';
 import { useQuery } from '@tanstack/react-query';
 import Axios from 'axios';
 import { UsersList } from './UsersList';
+import { UserAddForm } from './UserAddForm';
+import { createContext } from 'react';
+
+
+export interface User{
+  id?: string;
+  name?: string;
+  email?: string;
+  password?: string;
+  role?: number
+}
+
+interface UserContextTypes{
+  users?: User[];
+  refetchUsers?: () => void;
+}
+
+export const UserContext = createContext<UserContextTypes>({});
 
 export const Users = () => {
   const { userLogged } = useIsAuth();
@@ -21,9 +39,12 @@ export const Users = () => {
     return <Navigate to={'/'} />
   }
   return(
-    <div>
-      <h1>Users</h1>
-      <UsersList users={users}/>
-    </div>
+    <UserContext.Provider value={{users, refetchUsers}}>
+      <div>
+        <h1>Users</h1>
+        <UsersList/>
+        <UserAddForm />
+      </div>
+    </UserContext.Provider>
   );
 }

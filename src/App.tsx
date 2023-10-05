@@ -8,12 +8,14 @@ import { Login } from './pages/auth/Login';
 import { createContext, Provider } from 'react';
 import { useIsAuth } from './utilities/useIsAuth';
 import { Users } from './pages/users/Users';
+import { User } from './pages/users/Users';
 
 interface AppContextTypes{
   userLogged?: boolean;
+  user?: User | null;
 }
 
-export const AppContext = createContext<AppContextTypes | {userLogged: null}>({userLogged: true});
+export const AppContext = createContext<AppContextTypes | {userLogged: null, user: null | undefined}>({userLogged: true, user: null});
 
 function App() {
   const client = new QueryClient({
@@ -24,12 +26,12 @@ function App() {
     }
   });
 
-  const { userLogged } = useIsAuth();
+  const { userLogged, user } = useIsAuth();
 
   return (
 
     <div className="App">
-    <AppContext.Provider value={{userLogged}}>
+    <AppContext.Provider value={{userLogged, user}}>
       <Router>
         <Navbar />
         <QueryClientProvider client={client}>

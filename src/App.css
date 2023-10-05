@@ -65,13 +65,16 @@ button:hover{
 .navbar .link:hover{
   opacity: 80%;
 }
+.navbar .user{
+  margin: auto 0.5rem auto auto;
+}
 
 .loginForm{
   display: flex;
   flex-direction: column;
   width: 30rem;
   margin: auto;
-  padding-top: 10rem;
+  padding-top: 1rem;
 }
 .loginForm *{
   margin-bottom: 1rem;
@@ -83,7 +86,9 @@ button:hover{
   outline: none;
 }
 .loginForm input[type='text'],
-.loginForm input[type='password']{
+.loginForm input[type='password'],
+.loginForm input[type='email'],
+.loginForm input[type='number']{
   border: none;
   border-bottom: 0.2rem solid var( --primary);
   background-color: transparent;

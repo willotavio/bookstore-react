@@ -1,19 +1,9 @@
+import { useContext } from 'react';
 import '../../App.css';
+import { User, UserContext } from './Users';
 
-interface Props{
-  users: User[];
-}
-
-export interface User{
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  role: number
-}
-
-export const UsersList = (props: Props) => {
-  const { users } = props;
+export const UsersList = () => {
+  const { users } = useContext(UserContext);
   return(
     <div className='listDefault'>
       <table>

@@ -7,19 +7,24 @@ import { AppContext } from '../App';
 export const Navbar = () => {
   const navigate = useNavigate();
   
-  const { userLogged } = useContext(AppContext);
+  const { userLogged, user } = useContext(AppContext);
 
   return(
     <div className='navbar'>
       <Link className='link' to='/'>Ж</Link>
       <Link className='link' to='/book'>Books</Link>
       <Link className='link' to='/author'>Authors</Link>
+      { !userLogged && <Link className='link user' to='/login'>Login</Link>}
       { userLogged
-        ? <>
-            <Link className='link' to={''} onClick={() => [logout(), navigate('/')]}>Logout</Link>
+      
+        && 
+          <>
             <Link className='link' to={'/user'}>Users</Link>
+            <div className='user'>
+              <Link className='link' to={''}>{user?.name}</Link>
+              <Link className='link' to={''} onClick={() => [logout(), navigate('/')]}>Logout</Link>
+            </div>
           </>
-        : <Link className='link' to='/login'>Login</Link>
       }  
     </div>
   );
