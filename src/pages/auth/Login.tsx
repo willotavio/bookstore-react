@@ -22,7 +22,7 @@ export const Login = () => {
     return await Axios.post('http://localhost:8080/auth', data).then((res) => {
       localStorage.setItem('user', JSON.stringify(res.data.user));
       localStorage.setItem('token', res.data.token);
-      window.dispatchEvent(new Event('storage'));
+      window.dispatchEvent(new Event('login'));
       navigate('/');
     })
     .catch((err) => console.log(err));

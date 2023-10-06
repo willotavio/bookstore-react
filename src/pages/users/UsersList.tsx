@@ -3,7 +3,7 @@ import '../../App.css';
 import { User, UserContext } from './Users';
 
 export const UsersList = () => {
-  const { users, deleteUser } = useContext(UserContext);
+  const { users, editUser, deleteUser } = useContext(UserContext);
   return(
     <div className='listDefault'>
       <table>
@@ -25,7 +25,7 @@ export const UsersList = () => {
                 <td>{user.email}</td>
                 <td>{user.role}</td>
                 <td>
-                  <button>Update</button>
+                  <button onClick={() => editUser(user.id)}>Update</button>
                   <button onClick={() => deleteUser(user.id)}>Delete</button>
                 </td>
               </tr>

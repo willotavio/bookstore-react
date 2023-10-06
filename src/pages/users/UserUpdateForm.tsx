@@ -2,40 +2,46 @@ import '../../App.css';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { UserContext } from './Users';
 
-export const UserAddForm = () => {
+export const UserUpdateForm = () => {
 
-  const { addUser } = useContext(UserContext);
+  const { updateUser, selectedUser } = useContext(UserContext);
 
   const schema = yup.object({
-    name: yup.string().required(),
-    email: yup.string().email().required(),
-    role: yup.number().required(),
-    password: yup.string().min(8).required(),
-    confirmPassword: yup.string().oneOf([yup.ref('password')]).required()
+    name: yup.string(),
+    email: yup.string().email(),
+    role: yup.number(),
+    password: yup.string()
   });
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+  const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
+
   const onSubmit = handleSubmit( async (data) => {
-    if(await addUser({id: "", ...data})){
+    if(await updateUser(selectedUser.id, {id: "", ...data})){
       reset();
     }
   });
+  
+  useEffect(() => {
+    setValue("name", selectedUser.name || "");
+    setValue("email", selectedUser.email || "");
+    setValue("role", selectedUser.role || 0);
+  }, [selectedUser]);
 
   return(
     <div>
-      <h2>Register new user</h2>
+      <h2>Update user</h2>
       <form className='loginForm' onSubmit={onSubmit}>
+        {selectedUser.email && <span>Editing user: {selectedUser.email}</span>}
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />
         <input type="email" {...register('email')} placeholder="Email" autoComplete='off' />
         <input type="number" {...register('role')} placeholder="Role" autoComplete='off' />
         <input type="password" {...register('password')} placeholder="Password" autoComplete='off' />
-        <input type="password" {...register('confirmPassword')} placeholder="Confirm Password" autoComplete='off' />
-        <input type="submit" value="Register"/>
+        <input type="submit" value="Update"/>
       </form>
     </div>
   );

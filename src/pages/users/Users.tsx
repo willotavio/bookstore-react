@@ -5,7 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import Axios from 'axios';
 import { UsersList } from './UsersList';
 import { UserAddForm } from './UserAddForm';
-import { createContext } from 'react';
+import { UserUpdateForm } from './UserUpdateForm';
+import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 
 export interface User{
@@ -19,13 +20,23 @@ export interface User{
 interface UserContextTypes{
   users: User[];
   refetchUsers: () => void;
+  addUser: (data: User) => Promise<boolean>;
+  editUser: (id: string) => void;
+  updateUser: (id: string, data: User) => Promise<boolean>;
   deleteUser: (id: string) => void;
+  selectedUser: User;
+  setSelectedUser: Dispatch<SetStateAction<{ id: string; }>>;
 }
 
 export const UserContext = createContext<UserContextTypes>({
   users: [],
   refetchUsers: () => {},
-  deleteUser: () => {}
+  addUser: async (): Promise<boolean> => {return false},
+  editUser: () => {},
+  updateUser: async (): Promise<boolean> => {return false},
+  deleteUser: () => {},
+  selectedUser: {id: ""},
+  setSelectedUser: () => {}
 });
 
 export const Users = () => {
@@ -40,6 +51,51 @@ export const Users = () => {
     });
   });
 
+  const addUser = async (data: User) => {
+    try{
+      await Axios.post('http://localhost:8080/user', data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+      refetchUsers();
+      return true;
+    }
+    catch(err){
+      console.log(err);
+      return false;
+    }
+  }
+
+  const [selectedUser, setSelectedUser] = useState({id: ''});
+  const editUser = (userId: string) => {
+    let result = users.filter((user: User) => user.id === userId)[0];
+    setSelectedUser(result);
+  }
+
+  const updateUser = async (id: string, data: User) => {
+    try{
+      const updatedUser: User = {id: ''};
+      if(data.name && data.name.length > 0){
+        updatedUser.name = data.name;
+      }
+      if(data.email && data.email.length > 0){
+        updatedUser.email = data.email;
+      }
+      if(data.role && data.role > -1){
+        updatedUser.role = data.role;
+      }
+      if(data.password && data.password.length >= 8){
+        updatedUser.password = data.password;
+      }
+      console.log(`updateduser: ${updatedUser.name}, ${updatedUser.email}, ${updatedUser.role}, ${updatedUser.password}`);
+      await Axios.put(`http://localhost:8080/user/${id}`, updatedUser, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      refetchUsers();
+      setSelectedUser({id: ''});
+      return true;
+    }
+    catch(err){
+      console.log(err);
+      return false;
+    }
+  }
+  
   const deleteUser = async (id: string) => {
     try{
       await Axios.delete(`http://localhost:8080/user/${id}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
@@ -54,11 +110,12 @@ export const Users = () => {
     return <Navigate to={'/'} />
   }
   return(
-    <UserContext.Provider value={{users, refetchUsers, deleteUser}}>
+    <UserContext.Provider value={{users, refetchUsers, addUser, editUser, updateUser, deleteUser, selectedUser, setSelectedUser}}>
       <div>
         <h1>Users</h1>
         <UsersList/>
         <UserAddForm />
+        { selectedUser.id && <UserUpdateForm /> }
       </div>
     </UserContext.Provider>
   );
