@@ -3,7 +3,7 @@ import '../../App.css';
 import { User, UserContext } from './Users';
 
 export const UsersList = () => {
-  const { users } = useContext(UserContext);
+  const { users, deleteUser } = useContext(UserContext);
   return(
     <div className='listDefault'>
       <table>
@@ -13,6 +13,7 @@ export const UsersList = () => {
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -23,6 +24,10 @@ export const UsersList = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.role}</td>
+                <td>
+                  <button>Update</button>
+                  <button onClick={() => deleteUser(user.id)}>Delete</button>
+                </td>
               </tr>
             ))
           }

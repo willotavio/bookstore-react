@@ -9,7 +9,7 @@ import { createContext } from 'react';
 
 
 export interface User{
-  id?: string;
+  id: string;
   name?: string;
   email?: string;
   password?: string;
@@ -17,11 +17,16 @@ export interface User{
 }
 
 interface UserContextTypes{
-  users?: User[];
-  refetchUsers?: () => void;
+  users: User[];
+  refetchUsers: () => void;
+  deleteUser: (id: string) => void;
 }
 
-export const UserContext = createContext<UserContextTypes>({});
+export const UserContext = createContext<UserContextTypes>({
+  users: [],
+  refetchUsers: () => {},
+  deleteUser: () => {}
+});
 
 export const Users = () => {
   const { userLogged } = useIsAuth();
@@ -35,11 +40,21 @@ export const Users = () => {
     });
   });
 
+  const deleteUser = async (id: string) => {
+    try{
+      await Axios.delete(`http://localhost:8080/user/${id}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      refetchUsers();
+    }
+    catch(err){
+      console.log(err);
+    }
+  };
+
   if(!userLogged){
     return <Navigate to={'/'} />
   }
   return(
-    <UserContext.Provider value={{users, refetchUsers}}>
+    <UserContext.Provider value={{users, refetchUsers, deleteUser}}>
       <div>
         <h1>Users</h1>
         <UsersList/>
