@@ -29,7 +29,7 @@ export const UserAddForm = () => {
   return(
     <div>
       <h2>Register new user</h2>
-      <form className='loginForm' onSubmit={onSubmit}>
+      <form className='defaultForm' onSubmit={onSubmit}>
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />
         <input type="email" {...register('email')} placeholder="Email" autoComplete='off' />
         <input type="number" {...register('role')} placeholder="Role" autoComplete='off' />

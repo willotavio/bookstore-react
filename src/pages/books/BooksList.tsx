@@ -1,22 +1,18 @@
 import '../../App.css';
-import { Author } from '../authors/AuthorsList';
+import { useContext } from 'react';
+import { BookContext } from './Books';
 
 export interface Book{
   id: string,
   title: string,
   synopsis: string,
   releaseDate: string,
-  price: string,
+  price: number,
   authorId: string
 }
 
-interface Props{
-  books: Book[];
-  authors: Author[];
-}
-
-export const BooksList = (props: Props) => {
-  const { books, authors } = props;
+export const BooksList = () => {
+  const { books, refetchBooks, authors, refetchAuthors } = useContext(BookContext);
   return(
     <div className='listDefault'>
       <table>
@@ -28,10 +24,11 @@ export const BooksList = (props: Props) => {
             <th>Release Date</th>
             <th>Price</th>
             <th>Author</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {books.map((book: Book) => (
+          {books?.map((book: Book) => (
             <tr key={book.id}>
               <td>{book.id}</td>
               <td>{book.title}</td>
@@ -41,6 +38,10 @@ export const BooksList = (props: Props) => {
               <td>{
                   authors?.filter((author) => author.id === book.authorId)[0].name
                 }</td>
+              <td>
+                <button>Update</button>
+                <button>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>

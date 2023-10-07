@@ -34,7 +34,7 @@ export const Login = () => {
 
   return(
     <div>
-      <form onSubmit={onSubmit} className='loginForm'>
+      <form onSubmit={onSubmit} className='defaultForm'>
         <h2>Login</h2>
         <input type='text' {...register('email')} placeholder='Email' autoComplete='off'/>
         <input type='password' {...register('password')} placeholder='Password' />

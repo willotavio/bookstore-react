@@ -35,7 +35,7 @@ export const UserUpdateForm = () => {
   return(
     <div>
       <h2>Update user</h2>
-      <form className='loginForm' onSubmit={onSubmit}>
+      <form className='defaultForm' onSubmit={onSubmit}>
         {selectedUser.email && <span>Editing user: {selectedUser.email}</span>}
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />
         <input type="email" {...register('email')} placeholder="Email" autoComplete='off' />

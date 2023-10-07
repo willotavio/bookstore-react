@@ -42,7 +42,7 @@ button:hover{
 .listDefault table td,
 .listDefault table th{
   border: 0.1rem solid #ddd;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 .listDefault table thead tr{
   background-color: var(--secondary);
@@ -69,36 +69,45 @@ button:hover{
   margin: auto 0.5rem auto auto;
 }
 
-.loginForm{
+.defaultForm{
   display: flex;
   flex-direction: column;
   width: 30rem;
   margin: auto;
   padding-top: 1rem;
 }
-.loginForm *{
+.defaultForm *{
   margin-bottom: 1rem;
 }
-.loginForm input{
+.defaultForm input{
   height: 3rem;
 }
-.loginForm input:focus{
+.defaultForm input:focus{
   outline: none;
 }
-.loginForm input[type='text'],
-.loginForm input[type='password'],
-.loginForm input[type='email'],
-.loginForm input[type='number']{
+.defaultForm input[type='text'],
+.defaultForm input[type='password'],
+.defaultForm input[type='email'],
+.defaultForm input[type='number'],
+.defaultForm input[type='date'],
+.defaultForm textarea,
+.defaultForm select{
   border: none;
   border-bottom: 0.2rem solid var( --primary);
   background-color: transparent;
   color: var(--text);
 }
-.loginForm input[type='submit']{
+.defaultForm textarea{
+  resize: vertical;
+}
+.defaultForm select option{
+  background-color: transparent;
+}
+.defaultForm input[type='submit']{
   background-color: var(--primary);
   border: none;
 }
-.loginForm input[type='submit']:hover{
+.defaultForm input[type='submit']:hover{
   opacity: 80%;
   cursor: pointer;
 }
