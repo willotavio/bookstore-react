@@ -12,7 +12,7 @@ export interface Book{
 }
 
 export const BooksList = () => {
-  const { books, refetchBooks, authors, refetchAuthors, editBook } = useContext(BookContext);
+  const { books, authors, editBook, deleteBook } = useContext(BookContext);
   return(
     <div className='listDefault'>
       <table>
@@ -40,7 +40,7 @@ export const BooksList = () => {
                 }</td>
               <td>
                 <button onClick={() => editBook(book.id)}>Update</button>
-                <button>Delete</button>
+                <button onClick={() => deleteBook(book.id)}>Delete</button>
               </td>
             </tr>
           ))}

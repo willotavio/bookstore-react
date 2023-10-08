@@ -18,6 +18,7 @@ interface BookContextTypes{
   updateBook: (id: string, data: Book) => Promise<boolean>;
   selectedBook: Book;
   setSelectedBook: Dispatch<SetStateAction<{ id: string; }>>;
+  deleteBook: (id: string) => Promise<boolean>
 }
 export const BookContext = createContext<BookContextTypes>({
   books: [], 
@@ -28,7 +29,8 @@ export const BookContext = createContext<BookContextTypes>({
   editBook: () => {},
   updateBook: async (): Promise<boolean> => {return false},
   selectedBook: {} as Book,
-  setSelectedBook: () => {}
+  setSelectedBook: () => {},
+  deleteBook: async (): Promise<boolean> => {return false}
 });
 
 export const Books = () => {
@@ -77,10 +79,22 @@ export const Books = () => {
       return false;
     }
   }
+
+  const deleteBook = async (id: string) => {
+    try{
+      await Axios.delete(`http://localhost:8080/book/${id}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      refetchBooks();
+      return true;
+    }
+    catch(err){
+      console.log(err);
+      return false;
+    }
+  }
   
   return(
     <div>
-      <BookContext.Provider value={{books, refetchBooks, authors, refetchAuthors, addBook, editBook, updateBook, selectedBook, setSelectedBook}}>
+      <BookContext.Provider value={{books, refetchBooks, authors, refetchAuthors, addBook, editBook, updateBook, selectedBook, setSelectedBook, deleteBook}}>
         <h1>Books</h1>
         <BooksList />
         {
