@@ -19,7 +19,6 @@ export const AuthorAddForm = () => {
   });
 
   const onSubmit = handleSubmit(  async (data) => {
-    console.log(data);
     if(await addAuthor(data as Author)){
       reset();
     }
@@ -29,10 +28,10 @@ export const AuthorAddForm = () => {
     <div>
       <h2>Register new author</h2>
       <form onSubmit={onSubmit} className='defaultForm'>
-        <input type='text' {...register('name')} placeholder='Name' />
-        <textarea {...register('biography')} placeholder='Biography' />
+        <input type='text' {...register('name')} placeholder='Name' autoComplete='off' />
+        <textarea {...register('biography')} placeholder='Biography' autoComplete='off' />
         <input type='date' {...register('birthDate')} />
-        <input type='submit' value='Add'/>
+        <input type='submit' value='Register'/>
       </form>
     </div>
   );

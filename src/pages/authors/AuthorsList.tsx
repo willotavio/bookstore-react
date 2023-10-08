@@ -11,7 +11,7 @@ export interface Author{
 
 export const AuthorsList = () => {
 
-  const { authors } = useContext(AuthorContext);
+  const { authors, editAuthor } = useContext(AuthorContext);
 
   return(
     <div className='listDefault'>
@@ -22,6 +22,7 @@ export const AuthorsList = () => {
             <th>Name</th>
             <th>Biography</th>
             <th>Birth Date</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -31,6 +32,10 @@ export const AuthorsList = () => {
               <td>{author.name}</td>
               <td>{author.biography}</td>
               <td>{author.birthDate}</td>
+              <td>
+                <button onClick={() => editAuthor(author.id)}>Update</button>
+                <button>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>

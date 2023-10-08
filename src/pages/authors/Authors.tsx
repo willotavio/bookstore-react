@@ -3,17 +3,26 @@ import Axios from 'axios';
 import { AuthorsList, Author } from "./AuthorsList";
 import { useIsAuth } from "../../utilities/useIsAuth";
 import { AuthorAddForm } from "./AuthorAddForm";
-import { createContext } from "react";
+import { Dispatch, createContext, useState } from "react";
+import { AuthorUpdateForm } from "./AuthorUpdateForm";
 
 interface AuthorContextTypes{
   authors: Author[];
   addAuthor: (data: Author) => Promise<boolean>;
+  editAuthor: (id: string) => void;
+  updateAuthor: (id: string, data: Author) => Promise<boolean>;
+  selectedAuthor: Author;
+  setSelectedAuthor: Dispatch<React.SetStateAction<Author>>;
 }
 
 export const AuthorContext = createContext<AuthorContextTypes>(
   {
     authors: [],
-    addAuthor: async (): Promise<boolean> => {return false}
+    addAuthor: async (): Promise<boolean> => {return false},
+    editAuthor: () => {},
+    updateAuthor: async (): Promise<boolean> => {return false},
+    selectedAuthor: {} as Author,
+    setSelectedAuthor: () => {}
   }
 );
 
@@ -38,15 +47,34 @@ export const Authors = () => {
     }
   }
 
+  const [selectedAuthor, setSelectedAuthor] = useState<Author>({} as Author);
+  const editAuthor = (id: string) => {
+    const result: Author = authors.filter((author: Author) => author.id === id)[0];
+    setSelectedAuthor(result);
+  }
+  const updateAuthor = async (id: string, data: Author) => {
+    try{
+      await Axios.put(`http://localhost:8080/author/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      refetchAuthors();
+      return true;
+    }
+    catch(err){
+      console.log(err);
+      return false;
+    }
+
+  }
+
   return(
     <div>
-      <AuthorContext.Provider value={{authors, addAuthor}}>
+      <AuthorContext.Provider value={{authors, addAuthor, editAuthor, updateAuthor, selectedAuthor, setSelectedAuthor}}>
         <h1>Authors</h1>
         <AuthorsList />
         {
           userLogged &&
           <>
-          <AuthorAddForm /> 
+            <AuthorAddForm />
+            {selectedAuthor.id && <AuthorUpdateForm />}
           </>
         }
       </AuthorContext.Provider>
