@@ -13,6 +13,7 @@ interface AuthorContextTypes{
   updateAuthor: (id: string, data: Author) => Promise<boolean>;
   selectedAuthor: Author;
   setSelectedAuthor: Dispatch<React.SetStateAction<Author>>;
+  deleteAuthor: (id: string) => Promise<boolean>
 }
 
 export const AuthorContext = createContext<AuthorContextTypes>(
@@ -22,7 +23,8 @@ export const AuthorContext = createContext<AuthorContextTypes>(
     editAuthor: () => {},
     updateAuthor: async (): Promise<boolean> => {return false},
     selectedAuthor: {} as Author,
-    setSelectedAuthor: () => {}
+    setSelectedAuthor: () => {},
+    deleteAuthor: async (): Promise<boolean> => {return false}
   }
 );
 
@@ -62,12 +64,23 @@ export const Authors = () => {
       console.log(err);
       return false;
     }
+  }
 
+  const deleteAuthor = async (id: string) => {
+    try{
+      await Axios.delete(`http://localhost:8080/author/${id}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      refetchAuthors();
+      return true;
+    }
+    catch(err){
+      console.log(err);
+      return false;
+    }
   }
 
   return(
     <div>
-      <AuthorContext.Provider value={{authors, addAuthor, editAuthor, updateAuthor, selectedAuthor, setSelectedAuthor}}>
+      <AuthorContext.Provider value={{authors, addAuthor, editAuthor, updateAuthor, selectedAuthor, setSelectedAuthor, deleteAuthor}}>
         <h1>Authors</h1>
         <AuthorsList />
         {
