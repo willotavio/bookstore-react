@@ -28,7 +28,7 @@ export const BookAddForm = () => {
 
   return(
     <div>
-      <h2>Register new user</h2>
+      <h2>Register new book</h2>
       <form className='defaultForm' onSubmit={onSubmit}>
         <input type="text" {...register('title')} placeholder="Title" autoComplete='off' />
         <textarea {...register('synopsis')} placeholder="Synopsis" autoComplete='off' />

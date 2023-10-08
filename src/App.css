@@ -111,3 +111,6 @@ button:hover{
   opacity: 80%;
   cursor: pointer;
 }
+.defaultForm .closeUpdateForm{
+  padding-left: 30rem;
+}

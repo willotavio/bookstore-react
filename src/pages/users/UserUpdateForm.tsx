@@ -7,7 +7,7 @@ import { User, UserContext } from './Users';
 
 export const UserUpdateForm = () => {
 
-  const { updateUser, selectedUser } = useContext(UserContext);
+  const { updateUser, selectedUser, setSelectedUser } = useContext(UserContext);
 
   const schema = yup.object({
     name: yup.string(),
@@ -47,7 +47,7 @@ export const UserUpdateForm = () => {
 
   return(
     <div>
-      <h2>Update user</h2>
+      <h2>Update user <button className='closeUpdateForm' onClick={() => setSelectedUser({id: ''})}>X</button></h2>
       <form className='defaultForm' onSubmit={onSubmit}>
         {selectedUser.email && <span>Editing user: {selectedUser.email}</span>}
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />

@@ -8,7 +8,7 @@ import { Book } from './BooksList';
 
 export const BookUpdateForm = () => {
 
-  const { authors, updateBook, selectedBook } = useContext(BookContext);
+  const { authors, updateBook, selectedBook, setSelectedBook } = useContext(BookContext);
 
   const schema = yup.object({
     title: yup.string(),
@@ -53,7 +53,7 @@ export const BookUpdateForm = () => {
 
   return(
     <div>
-      <h2>Update book</h2>
+      <h2>Update book <button className='closeUpdateForm' onClick={() => setSelectedBook({id: ''})}>X</button></h2>
       <form className='defaultForm' onSubmit={onSubmit}>
         {selectedBook.title && <span>Editing book: {selectedBook.title}</span>}
         <input type="text" {...register('title')} placeholder="Title" autoComplete='off' />
