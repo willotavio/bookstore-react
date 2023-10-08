@@ -3,9 +3,10 @@ import Axios from "axios";
 import { BooksList } from "./BooksList";
 import { Book } from "./BooksList";
 import { Author } from "../authors/AuthorsList";
-import { createContext } from "react";
+import { Dispatch, SetStateAction, createContext, useState } from "react";
 import { BookAddForm } from "./BookAddForm";
 import { useIsAuth } from "../../utilities/useIsAuth";
+import { BookUpdateForm } from "./BookUpdateForm";
 
 interface BookContextTypes{
   books: Book[];
@@ -13,13 +14,21 @@ interface BookContextTypes{
   authors: Author[];
   refetchAuthors: () => void;
   addBook: (data: Book) => Promise<boolean>;
+  editBook: (id: string) => void;
+  updateBook: (id: string, data: Book) => Promise<boolean>;
+  selectedBook: Book;
+  setSelectedBook: Dispatch<SetStateAction<{ id: string; }>>;
 }
 export const BookContext = createContext<BookContextTypes>({
   books: [], 
-  refetchBooks: () => {}, 
+  refetchBooks: () => {},
   authors: [], 
   refetchAuthors: () => {},
-  addBook: async (): Promise<boolean> => {return false}
+  addBook: async (): Promise<boolean> => {return false},
+  editBook: () => {},
+  updateBook: async (): Promise<boolean> => {return false},
+  selectedBook: {} as Book,
+  setSelectedBook: () => {}
 });
 
 export const Books = () => {
@@ -27,13 +36,13 @@ export const Books = () => {
 
   const { data: books, refetch: refetchBooks } = useQuery(['books'], async () => {
     return await Axios.get('http://localhost:8080/book').then((res) => {
-      res.data.forEach((book: Book) => book.releaseDate = book.releaseDate.split("T")[0]);
+      res.data.forEach((book: Book) => book.releaseDate ? book.releaseDate = book.releaseDate.split("T")[0] : "");
       return res.data;
     }).catch((err) => console.log(err));
   });
   const { data: authors, refetch: refetchAuthors } = useQuery(['authors'], async () => {
     return await Axios.get('http://localhost:8080/author').then((res) => {
-      res.data.forEach((author: Author) => author.birthDate = author.birthDate.split("T")[0]);
+      res.data.forEach((author: Author) => author.birthDate ? author.birthDate = author.birthDate.split("T")[0] : "");
       return res.data;
     }).catch((err) => console.log(err));
   });
@@ -49,15 +58,37 @@ export const Books = () => {
       return false;
     }
   }
+
+  const [selectedBook, setSelectedBook] = useState<Book>({id: ''});
+  const editBook = (id: string) => {
+    const result = books.filter((book: Book) => book.id === id)[0];
+    setSelectedBook(result);
+  }
+
+  const updateBook = async (id: string, data: Book) => {
+    try{
+      await Axios.put(`http://localhost:8080/book/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      refetchBooks();
+      setSelectedBook({id: ''});
+      return true;
+    }
+    catch(err){
+      console.log(err);
+      return false;
+    }
+  }
   
   return(
     <div>
-      <BookContext.Provider value={{books, refetchBooks, authors, refetchAuthors, addBook}}>
+      <BookContext.Provider value={{books, refetchBooks, authors, refetchAuthors, addBook, editBook, updateBook, selectedBook, setSelectedBook}}>
         <h1>Books</h1>
         <BooksList />
         {
           userLogged &&
-          <BookAddForm />
+          <>
+            <BookAddForm />
+            {selectedBook.id && <BookUpdateForm />}
+          </>
         }
       </BookContext.Provider>
     </div>

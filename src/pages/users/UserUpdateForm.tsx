@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect } from 'react';
-import { UserContext } from './Users';
+import { User, UserContext } from './Users';
 
 export const UserUpdateForm = () => {
 
@@ -21,7 +21,20 @@ export const UserUpdateForm = () => {
   })
 
   const onSubmit = handleSubmit( async (data) => {
-    if(await updateUser(selectedUser.id, {id: "", ...data})){
+    const updatedUser: User = {id: ''};
+    if(data.name && data.name.length > 0){
+      updatedUser.name = data.name;
+    }
+    if(data.email && data.email.length > 0){
+      updatedUser.email = data.email;
+    }
+    if(data.role && data.role > -1){
+      updatedUser.role = data.role;
+    }
+    if(data.password && data.password.length >= 8){
+      updatedUser.password = data.password;
+    }
+    if(await updateUser(selectedUser.id, updatedUser)){
       reset();
     }
   });

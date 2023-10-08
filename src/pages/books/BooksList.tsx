@@ -4,15 +4,15 @@ import { BookContext } from './Books';
 
 export interface Book{
   id: string,
-  title: string,
-  synopsis: string,
-  releaseDate: string,
-  price: number,
-  authorId: string
+  title?: string,
+  synopsis?: string,
+  releaseDate?: string,
+  price?: number,
+  authorId?: string
 }
 
 export const BooksList = () => {
-  const { books, refetchBooks, authors, refetchAuthors } = useContext(BookContext);
+  const { books, refetchBooks, authors, refetchAuthors, editBook } = useContext(BookContext);
   return(
     <div className='listDefault'>
       <table>
@@ -39,7 +39,7 @@ export const BooksList = () => {
                   authors?.filter((author) => author.id === book.authorId)[0].name
                 }</td>
               <td>
-                <button>Update</button>
+                <button onClick={() => editBook(book.id)}>Update</button>
                 <button>Delete</button>
               </td>
             </tr>

@@ -71,21 +71,7 @@ export const Users = () => {
 
   const updateUser = async (id: string, data: User) => {
     try{
-      const updatedUser: User = {id: ''};
-      if(data.name && data.name.length > 0){
-        updatedUser.name = data.name;
-      }
-      if(data.email && data.email.length > 0){
-        updatedUser.email = data.email;
-      }
-      if(data.role && data.role > -1){
-        updatedUser.role = data.role;
-      }
-      if(data.password && data.password.length >= 8){
-        updatedUser.password = data.password;
-      }
-      console.log(`updateduser: ${updatedUser.name}, ${updatedUser.email}, ${updatedUser.role}, ${updatedUser.password}`);
-      await Axios.put(`http://localhost:8080/user/${id}`, updatedUser, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      await Axios.put(`http://localhost:8080/user/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
       refetchUsers();
       setSelectedUser({id: ''});
       return true;
