@@ -9,6 +9,7 @@ import { createContext, Provider } from 'react';
 import { useIsAuth } from './utilities/useIsAuth';
 import { Users } from './pages/users/Users';
 import { User } from './pages/users/Users';
+import { Register } from './pages/auth/Register';
 
 interface AppContextTypes{
   userLogged?: boolean;
@@ -41,6 +42,7 @@ function App() {
             <Route path='/author' element={<Authors />}/>
             <Route path='/user' element={<Users />}/>
             <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
           </Routes>
         </QueryClientProvider>
       </Router>

@@ -7,6 +7,7 @@ import { UsersList } from './UsersList';
 import { UserAddForm } from './UserAddForm';
 import { UserUpdateForm } from './UserUpdateForm';
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
+import { logout } from '../../utilities/logout';
 
 export interface User{
   id: string;
@@ -84,6 +85,7 @@ export const Users = () => {
   const deleteUser = async (id: string) => {
     try{
       await Axios.delete(`http://localhost:8080/user/${id}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      id === user.id && logout();
       refetchUsers();
     }
     catch(err){
@@ -91,7 +93,7 @@ export const Users = () => {
     }
   };
 
-  if(!userLogged || user.role < 2){
+  if(!userLogged || user.role < 3){
     return <Navigate to={'/'} />
   }
   return(

@@ -14,8 +14,13 @@ export const Navbar = () => {
       <Link className='link' to='/'>Ж</Link>
       <Link className='link' to='/book'>Books</Link>
       <Link className='link' to='/author'>Authors</Link>
-      { !userLogged && <Link className='link user' to='/login'>Login</Link>}
-      {userLogged && user && user?.role >= 2
+      { !userLogged &&
+        <div className='userLink'>
+          <Link className='link' to='/login'>Login</Link>
+          <Link className='link' to='/register'>Register</Link>
+        </div>
+      }
+      {userLogged && user && user?.role >= 3
         &&
         <>
           <Link className='link' to={'/user'}>Users</Link>

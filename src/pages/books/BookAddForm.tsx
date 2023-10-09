@@ -7,7 +7,7 @@ import { BookContext } from './Books';
 
 export const BookAddForm = () => {
 
-  const { books, authors, addBook } = useContext(BookContext);
+  const { books, authors, addBook, selectedBook } = useContext(BookContext);
 
   const schema = yup.object({
     title: yup.string().required(),
