@@ -34,7 +34,7 @@ export const BookContext = createContext<BookContextTypes>({
 });
 
 export const Books = () => {
-  const { userLogged } = useIsAuth();
+  const { userLogged, user } = useIsAuth();
 
   const { data: books, refetch: refetchBooks } = useQuery(['books'], async () => {
     return await Axios.get('http://localhost:8080/book').then((res) => {
@@ -98,7 +98,7 @@ export const Books = () => {
         <h1>Books</h1>
         <BooksList />
         {
-          userLogged &&
+          userLogged && user.role >= 2 &&
           <>
             <BookAddForm />
             {selectedBook.id && <BookUpdateForm />}

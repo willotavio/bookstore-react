@@ -4,7 +4,7 @@ import { User } from '../pages/users/Users';
 
 export const useIsAuth = () => {
   const [userLogged, setUserLogged] = useState<boolean>(isTokenValid(localStorage.getItem('token')));
-  const defaultUserValue: User = {id: ""};
+  const defaultUserValue: User = {} as User;
   const storedUserValue = localStorage.getItem('user');
   const [user, setUser] = useState<User>(storedUserValue ? JSON.parse(storedUserValue) : defaultUserValue);
 

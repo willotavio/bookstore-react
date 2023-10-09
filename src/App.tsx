@@ -12,10 +12,10 @@ import { User } from './pages/users/Users';
 
 interface AppContextTypes{
   userLogged?: boolean;
-  user?: User | null;
+  user?: User;
 }
 
-export const AppContext = createContext<AppContextTypes | {userLogged: null, user: null | undefined}>({userLogged: true, user: null});
+export const AppContext = createContext<AppContextTypes | {userLogged: null, user: {}}>({userLogged: true, user: {} as User});
 
 function App() {
   const client = new QueryClient({

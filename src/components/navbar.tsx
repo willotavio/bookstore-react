@@ -15,17 +15,19 @@ export const Navbar = () => {
       <Link className='link' to='/book'>Books</Link>
       <Link className='link' to='/author'>Authors</Link>
       { !userLogged && <Link className='link user' to='/login'>Login</Link>}
-      { userLogged
-      
-        && 
-          <>
-            <Link className='link' to={'/user'}>Users</Link>
-            <div className='user'>
-              <Link className='link' to={''}>{user?.name}</Link>
-              <Link className='link' to={''} onClick={() => [logout(), navigate('/')]}>Logout</Link>
-            </div>
-          </>
+      {userLogged && user && user?.role >= 2
+        &&
+        <>
+          <Link className='link' to={'/user'}>Users</Link>
+        </>
       }  
+      { 
+      userLogged && 
+        <div className='user'>
+          <Link className='link' to={''}>{user?.name}</Link>
+          <Link className='link' to={''} onClick={() => [logout(), navigate('/')]}>Logout</Link>
+        </div>
+      }
     </div>
   );
 }

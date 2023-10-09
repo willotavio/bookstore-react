@@ -29,7 +29,7 @@ export const AuthorContext = createContext<AuthorContextTypes>(
 );
 
 export const Authors = () => {
-  const { userLogged } = useIsAuth();
+  const { userLogged, user } = useIsAuth();
   const { data: authors, refetch: refetchAuthors } = useQuery(['authors'], () => {
     return Axios.get('http://localhost:8080/author').then((res) => {
       res.data.forEach((author: Author) => author.birthDate = author.birthDate.split("T")[0]);
@@ -84,7 +84,7 @@ export const Authors = () => {
         <h1>Authors</h1>
         <AuthorsList />
         {
-          userLogged &&
+          userLogged && user.role >= 2 &&
           <>
             <AuthorAddForm />
             {selectedAuthor.id && <AuthorUpdateForm />}

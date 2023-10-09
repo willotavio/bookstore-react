@@ -21,7 +21,7 @@ export const UserUpdateForm = () => {
   })
 
   const onSubmit = handleSubmit( async (data) => {
-    const updatedUser: User = {id: ''};
+    const updatedUser: User = {} as User;
     if(data.name && data.name.length > 0){
       updatedUser.name = data.name;
     }
@@ -47,7 +47,7 @@ export const UserUpdateForm = () => {
 
   return(
     <div>
-      <h2>Update user <button className='closeUpdateForm' onClick={() => setSelectedUser({id: ''})}>X</button></h2>
+      <h2>Update user <button className='closeUpdateForm' onClick={() => setSelectedUser({} as User)}>X</button></h2>
       <form className='defaultForm' onSubmit={onSubmit}>
         {selectedUser.email && <span>Editing user: {selectedUser.email}</span>}
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />

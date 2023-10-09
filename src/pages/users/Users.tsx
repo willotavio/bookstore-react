@@ -8,13 +8,12 @@ import { UserAddForm } from './UserAddForm';
 import { UserUpdateForm } from './UserUpdateForm';
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
-
 export interface User{
   id: string;
   name?: string;
   email?: string;
   password?: string;
-  role?: number
+  role: number
 }
 
 interface UserContextTypes{
@@ -25,7 +24,7 @@ interface UserContextTypes{
   updateUser: (id: string, data: User) => Promise<boolean>;
   deleteUser: (id: string) => void;
   selectedUser: User;
-  setSelectedUser: Dispatch<SetStateAction<{ id: string; }>>;
+  setSelectedUser: Dispatch<SetStateAction<User>>;
 }
 
 export const UserContext = createContext<UserContextTypes>({
@@ -35,12 +34,12 @@ export const UserContext = createContext<UserContextTypes>({
   editUser: () => {},
   updateUser: async (): Promise<boolean> => {return false},
   deleteUser: () => {},
-  selectedUser: {id: ""},
+  selectedUser: {} as User,
   setSelectedUser: () => {}
 });
 
 export const Users = () => {
-  const { userLogged } = useIsAuth();
+  const { userLogged, user } = useIsAuth();
 
   const {data: users, refetch: refetchUsers} = useQuery(['users'], async () => {
     return await Axios.get('http://localhost:8080/user', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then((res) => {
@@ -63,7 +62,7 @@ export const Users = () => {
     }
   }
 
-  const [selectedUser, setSelectedUser] = useState({id: ''});
+  const [selectedUser, setSelectedUser] = useState({} as User);
   const editUser = (userId: string) => {
     let result = users.filter((user: User) => user.id === userId)[0];
     setSelectedUser(result);
@@ -73,7 +72,7 @@ export const Users = () => {
     try{
       await Axios.put(`http://localhost:8080/user/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
       refetchUsers();
-      setSelectedUser({id: ''});
+      setSelectedUser({} as User);
       return true;
     }
     catch(err){
@@ -92,7 +91,7 @@ export const Users = () => {
     }
   };
 
-  if(!userLogged){
+  if(!userLogged || user.role < 2){
     return <Navigate to={'/'} />
   }
   return(
