@@ -10,6 +10,7 @@ import { Dispatch, SetStateAction, createContext, useState } from 'react';
 import { logout } from '../../utilities/logout';
 
 export interface User{
+  profilePicture?: string;
   id: string;
   name?: string;
   email?: string;

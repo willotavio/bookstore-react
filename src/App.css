@@ -51,7 +51,7 @@ button:hover{
 
 .navbar{
   display: flex;
-  background-color: var(--secondary);
+  background-color: var(--secondary);align-items: center;
   height: 3rem;
 }
 .navbar *{
@@ -65,10 +65,15 @@ button:hover{
   opacity: 80%;
 }
 .navbar .user{
-  margin: auto 0.5rem auto auto;
+  margin-left: auto;
+  display: flex;
 }
 .navbar .userLink{
   margin: auto 0.5rem auto auto;
+}
+.navbar .user .profilePic{
+  width: 2rem;
+  border-radius: 50%;
 }
 
 .defaultForm{
@@ -104,7 +109,7 @@ button:hover{
   resize: vertical;
 }
 .defaultForm select option{
-  background-color: transparent;
+  background-color: var(--background);
 }
 .defaultForm input[type='submit']{
   background-color: var(--primary);
@@ -116,4 +121,21 @@ button:hover{
 }
 .defaultForm .closeUpdateForm{
   padding-left: 30rem;
+}
+
+.profileHeader{
+  margin: 1rem 0;
+}
+.profileHeader h2{
+  margin: 0 5rem;
+}
+.profileHeader .profilePic{
+  width: 10rem;
+  height: 10rem;
+  background-color: var(--text);
+  border-radius: 50%;
+  margin: 0 auto;
+}
+.profileContent{
+  margin: 1rem 0;
 }

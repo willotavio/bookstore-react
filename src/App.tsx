@@ -10,6 +10,7 @@ import { useIsAuth } from './utilities/useIsAuth';
 import { Users } from './pages/users/Users';
 import { User } from './pages/users/Users';
 import { Register } from './pages/auth/Register';
+import { Profile } from './pages/profile/Profile';
 
 interface AppContextTypes{
   userLogged?: boolean;
@@ -43,6 +44,7 @@ function App() {
             <Route path='/user' element={<Users />}/>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+            <Route path='/profile' element={<Profile />} />
           </Routes>
         </QueryClientProvider>
       </Router>

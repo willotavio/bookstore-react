@@ -29,7 +29,13 @@ export const Navbar = () => {
       { 
       userLogged && 
         <div className='user'>
-          <Link className='link' to={''}>{user?.name}</Link>
+          <img className='profilePic' src={
+            user?.profilePicture && user.profilePicture.length > 0
+            ? `http://localhost:8080/uploads/profile-pictures/${user?.id}-profilepic.jpg`
+            : 'http://localhost:8080/uploads/profile-pictures/null-profilepic.jpg'
+          } 
+            />
+          <Link className='link' to={'/profile'}>{user?.name}</Link>
           <Link className='link' to={''} onClick={() => [logout(), navigate('/')]}>Logout</Link>
         </div>
       }
