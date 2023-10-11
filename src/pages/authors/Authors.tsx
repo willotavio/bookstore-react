@@ -1,10 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import Axios from 'axios';
-import { AuthorsList, Author } from "./AuthorsList";
+import { AuthorsList } from "./AuthorsList";
 import { useIsAuth } from "../../utilities/useIsAuth";
 import { AuthorAddForm } from "./AuthorAddForm";
 import { Dispatch, createContext, useState } from "react";
 import { AuthorUpdateForm } from "./AuthorUpdateForm";
+
+export interface Author{
+  id: string,
+  name: string,
+  biography: string,
+  birthDate: string
+}
 
 interface AuthorContextTypes{
   authors: Author[];

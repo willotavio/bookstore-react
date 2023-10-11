@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useContext } from 'react';
-import { UserContext } from './Users';
+import { UserContext, handleFileSelect } from './Users';
 
 export const UserAddForm = () => {
 
@@ -24,7 +24,7 @@ export const UserAddForm = () => {
   const onSubmit = handleSubmit( async (data) => {
     if(data.profilePicture.length > 0){
       try{
-        const profilePictureBase64 = await handleFileSelect(data.profilePicture as FileList);
+        const profilePictureBase64 = await handleFileSelect(data.profilePicture);
         data.profilePicture = profilePictureBase64;
       }
       catch(err){
@@ -35,42 +35,6 @@ export const UserAddForm = () => {
       reset();
     }
   });
-
-  const handleFileSelect = (fileList: FileList): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const files = Array.from(fileList); // Convert FileList to an array
-  
-      if (files.length === 0) {
-        reject(new Error('No files selected.'));
-      }
-  
-      const reader = new FileReader();
-      const base64Strings: string[] = [];
-  
-      reader.onload = function () {
-        if (typeof reader.result === 'string') {
-          const base64String = reader.result.split(',')[1]; // Extract base64 string (remove data URL prefix)
-          if (base64String) {
-            base64Strings.push(base64String);
-          }
-          if (base64Strings.length === files.length) {
-            // Resolve the promise with the array of base64 strings
-            resolve(base64Strings[0]);
-          }
-        }
-      };
-  
-      reader.onerror = function (error) {
-        // Reject the promise if there's an error reading the file
-        reject(error);
-      };
-  
-      // Read each file as a data URL (base64)
-      files.forEach(file => {
-        reader.readAsDataURL(file);
-      });
-    });
-  }
 
   return(
     <div>

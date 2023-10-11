@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect } from 'react';
 import { BookContext } from './Books';
-import { Book } from './BooksList';
+import { Book } from './Books';
 
 export const BookUpdateForm = () => {
 

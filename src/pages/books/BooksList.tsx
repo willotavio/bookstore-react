@@ -2,15 +2,6 @@ import '../../App.css';
 import { useContext } from 'react';
 import { BookContext } from './Books';
 
-export interface Book{
-  id: string,
-  title?: string,
-  synopsis?: string,
-  releaseDate?: string,
-  price?: number,
-  authorId?: string
-}
-
 export const BooksList = () => {
   const { books, authors, editBook, deleteBook } = useContext(BookContext);
   return(
@@ -28,7 +19,7 @@ export const BooksList = () => {
           </tr>
         </thead>
         <tbody>
-          {books?.map((book: Book) => (
+          {books?.map((book) => (
             <tr key={book.id}>
               <td>{book.id}</td>
               <td>{book.title}</td>

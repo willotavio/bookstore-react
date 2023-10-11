@@ -1,12 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import Axios from "axios";
 import { BooksList } from "./BooksList";
-import { Book } from "./BooksList";
-import { Author } from "../authors/AuthorsList";
+import { Author } from "../authors/Authors";
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 import { BookAddForm } from "./BookAddForm";
 import { useIsAuth } from "../../utilities/useIsAuth";
 import { BookUpdateForm } from "./BookUpdateForm";
+
+export interface Book{
+  id: string,
+  title?: string,
+  synopsis?: string,
+  releaseDate?: string,
+  price?: number,
+  authorId?: string
+}
 
 interface BookContextTypes{
   books: Book[];

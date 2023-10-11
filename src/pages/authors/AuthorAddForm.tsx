@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useContext } from 'react';
 import { AuthorContext } from './Authors';
-import { Author } from './AuthorsList';
+import { Author } from './Authors';
 export const AuthorAddForm = () => {
 
   const { addAuthor } = useContext(AuthorContext);

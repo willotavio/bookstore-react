@@ -2,13 +2,6 @@ import '../../App.css';
 import { useContext } from 'react';
 import { AuthorContext } from './Authors';
 
-export interface Author{
-  id: string,
-  name: string,
-  biography: string,
-  birthDate: string
-}
-
 export const AuthorsList = () => {
 
   const { authors, editAuthor, deleteAuthor } = useContext(AuthorContext);

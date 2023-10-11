@@ -10,12 +10,12 @@ import { Dispatch, SetStateAction, createContext, useState } from 'react';
 import { logout } from '../../utilities/logout';
 
 export interface User{
-  profilePicture?: string;
   id: string;
   name?: string;
   email?: string;
   password?: string;
   role: number
+  profilePicture?: string;
 }
 
 interface UserContextTypes{
@@ -39,6 +39,38 @@ export const UserContext = createContext<UserContextTypes>({
   selectedUser: {} as User,
   setSelectedUser: () => {}
 });
+
+export const handleFileSelect = (fileList: FileList): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const files = Array.from(fileList);
+
+    if (files.length === 0) {
+      reject(new Error('No files selected'));
+    }
+
+    const reader = new FileReader();
+    const base64Strings: string[] = [];
+
+    reader.onload = () => {
+      if(typeof reader.result === 'string') {
+        const base64String = reader.result.split(',')[1];
+        if (base64String) {
+          base64Strings.push(base64String);
+        }
+        if (base64Strings.length === files.length) {
+          resolve(base64Strings[0]);
+        }
+      }
+    };
+
+    reader.onerror = (error) => {
+      reject(error);
+    };
+    files.forEach(file => {
+      reader.readAsDataURL(file);
+    });
+  });
+}
 
 export const Users = () => {
   const { userLogged, user } = useIsAuth();
