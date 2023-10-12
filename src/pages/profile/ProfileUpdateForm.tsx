@@ -2,25 +2,39 @@ import '../../App.css';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { useContext, useEffect } from 'react';
-import { User, UserContext } from './Users';
-import { handleFileSelect } from './Users';
+import { User } from '../users/Users'; 
+import { handleFileSelect } from '../users/Users';
+import Axios from 'axios';
+import { useIsAuth } from '../../utilities/useIsAuth';
+import { useEffect } from 'react';
 
-export const UserUpdateForm = () => {
+export const ProfileUpdateForm = () => {
 
-  const { updateUser, selectedUser, setSelectedUser } = useContext(UserContext);
+  const { user } = useIsAuth();
+
+  const updateProfile = async (data: User) => {
+    try{
+      const result = await Axios.put(`http://localhost:8080/user/update/${user.id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+      localStorage.setItem('user', JSON.stringify(result.data.user[0]));
+      window.dispatchEvent(new Event('login'));
+      return true;
+    }catch(err){
+      console.error(err);
+      return false;
+    }
+  }
 
   const schema = yup.object({
     name: yup.string(),
     email: yup.string().email(),
-    role: yup.number(),
     password: yup.string(),
+    confirmPassword: yup.string(),
     profilePicture: yup.mixed()
   });
 
   const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
-  })
+  });
 
   const onSubmit = handleSubmit( async (data) => {
     const updatedUser: User = {} as User;
@@ -30,10 +44,7 @@ export const UserUpdateForm = () => {
     if(data.email && data.email.length > 0){
       updatedUser.email = data.email;
     }
-    if(data.role && data.role > -1){
-      updatedUser.role = data.role;
-    }
-    if(data.password && data.password.length >= 8){
+    if(data.password && data.password.length >= 8 && data.password === data.confirmPassword){
       updatedUser.password = data.password;
     }
     if(data.profilePicture.length > 0){
@@ -45,32 +56,23 @@ export const UserUpdateForm = () => {
         console.log(err);
       }
     }
-    if(await updateUser(selectedUser.id, updatedUser)){
-      reset();
-    }
+    await updateProfile(updatedUser);
   });
   
   useEffect(() => {
-    setValue("name", selectedUser.name || "");
-    setValue("email", selectedUser.email || "");
-    setValue("role", selectedUser.role || 0);
-  }, [selectedUser]);
+    setValue("name", user.name || "");
+    setValue("email", user.email || "");
+  }, [user]);
 
   return(
     <div>
-      <h2>Update user <button className='closeUpdateForm' onClick={() => setSelectedUser({} as User)}>X</button></h2>
+      <h2>Update profile</h2>
       <form className='defaultForm' onSubmit={onSubmit}>
-        {selectedUser.email && <span>Editing user: {selectedUser.email}</span>}
         <input type="file" {...register('profilePicture')} accept='image/*'/>
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />
         <input type="email" {...register('email')} placeholder="Email" autoComplete='off' />
-        <select {...register('role')}>
-          <option value={0}>Select a role</option>
-          <option value={1}>User</option>
-          <option value={2}>Admin</option>
-          <option value={3}>Main Admin</option>
-        </select>
         <input type="password" {...register('password')} placeholder="Password" autoComplete='off' />
+        <input type="password" {...register('confirmPassword')} placeholder="Confirm password" autoComplete='off' />
         <input type="submit" value="Update"/>
       </form>
     </div>

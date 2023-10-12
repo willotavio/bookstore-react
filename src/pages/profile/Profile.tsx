@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useIsAuth } from "../../utilities/useIsAuth";
-import { useState } from "react";
+import { ProfileUpdateForm } from "./ProfileUpdateForm";
 
 export const Profile = () => {
   const { userLogged, user } = useIsAuth();
@@ -23,6 +23,7 @@ export const Profile = () => {
         <p>Email: {user.email}</p>
         <p>Role: {user.role}</p>
       </div>
+      <ProfileUpdateForm />
     </div>
   );
 }

@@ -40,7 +40,7 @@ export const UserAddForm = () => {
     <div>
       <h2>Register new user</h2>
       <form className='defaultForm' onSubmit={onSubmit}>
-        <input type="file" {...register('profilePicture')} accept='image/*'/>
+        <input type="file" {...register('profilePicture')} accept='image/*' />
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />
         <input type="email" {...register('email')} placeholder="Email" autoComplete='off' />
         <select {...register('role')}>
