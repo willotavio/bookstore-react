@@ -14,7 +14,7 @@ export const Register = () => {
 
   const registerAccount = async (data: User) => {
     try{
-      await Axios.post('http://localhost:8080/user/register', data);
+      await Axios.post('http://localhost:8080/auth/register', data);
       return true;
     }
     catch(err){
@@ -36,7 +36,7 @@ export const Register = () => {
   })
   const onSubmit = handleSubmit( async (data) => {
     const newUser: User = { id: "", role: 1, ...data};
-    if(data.profilePicture){
+    if(data.profilePicture.length > 0){
       try{
         const profilePictureBase64 = await handleFileSelect(data.profilePicture);
         newUser.profilePicture = profilePictureBase64;

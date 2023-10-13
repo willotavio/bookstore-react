@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useIsAuth } from "../../utilities/useIsAuth";
 import { ProfileUpdateForm } from "./ProfileUpdateForm";
+import { PasswordUpdateForm } from "./PasswordUpdateForm";
 
 export const Profile = () => {
   const { userLogged, user } = useIsAuth();
@@ -24,6 +25,7 @@ export const Profile = () => {
         <p>Role: {user.role}</p>
       </div>
       <ProfileUpdateForm />
+      <PasswordUpdateForm />
     </div>
   );
 }

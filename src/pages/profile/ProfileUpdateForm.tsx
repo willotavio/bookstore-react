@@ -12,9 +12,9 @@ export const ProfileUpdateForm = () => {
 
   const { user } = useIsAuth();
 
-  const updateProfile = async (data: User) => {
+  const updateProfile = async (id: string, data: User) => {
     try{
-      const result = await Axios.put(`http://localhost:8080/user/update/${user.id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+      const result = await Axios.put(`http://localhost:8080/user/update/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
       localStorage.setItem('user', JSON.stringify(result.data.user[0]));
       window.dispatchEvent(new Event('login'));
       return true;
@@ -27,8 +27,6 @@ export const ProfileUpdateForm = () => {
   const schema = yup.object({
     name: yup.string(),
     email: yup.string().email(),
-    password: yup.string(),
-    confirmPassword: yup.string(),
     profilePicture: yup.mixed()
   });
 
@@ -44,9 +42,6 @@ export const ProfileUpdateForm = () => {
     if(data.email && data.email.length > 0){
       updatedUser.email = data.email;
     }
-    if(data.password && data.password.length >= 8 && data.password === data.confirmPassword){
-      updatedUser.password = data.password;
-    }
     if(data.profilePicture.length > 0){
       try{
         const profilePictureBase64 = await handleFileSelect(data.profilePicture as FileList);
@@ -56,7 +51,7 @@ export const ProfileUpdateForm = () => {
         console.log(err);
       }
     }
-    await updateProfile(updatedUser);
+    await updateProfile(user.id, updatedUser);
   });
   
   useEffect(() => {
@@ -70,9 +65,9 @@ export const ProfileUpdateForm = () => {
       <form className='defaultForm' onSubmit={onSubmit}>
         <input type="file" {...register('profilePicture')} accept='image/*'/>
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />
-        <input type="email" {...register('email')} placeholder="Email" autoComplete='off' />
+        <input type="email" {...register('email')} placeholder="Email" autoComplete='off' />{/* 
         <input type="password" {...register('password')} placeholder="Password" autoComplete='off' />
-        <input type="password" {...register('confirmPassword')} placeholder="Confirm password" autoComplete='off' />
+        <input type="password" {...register('confirmPassword')} placeholder="Confirm password" autoComplete='off' /> */}
         <input type="submit" value="Update"/>
       </form>
     </div>
