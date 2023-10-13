@@ -2,6 +2,7 @@ import { Navigate } from "react-router-dom";
 import { useIsAuth } from "../../utilities/useIsAuth";
 import { ProfileUpdateForm } from "./ProfileUpdateForm";
 import { PasswordUpdateForm } from "./PasswordUpdateForm";
+import { ProfileDeleteForm } from "./ProfileDeleteForm";
 
 export const Profile = () => {
   const { userLogged, user } = useIsAuth();
@@ -26,6 +27,7 @@ export const Profile = () => {
       </div>
       <ProfileUpdateForm />
       <PasswordUpdateForm />
+      <ProfileDeleteForm />
     </div>
   );
 }

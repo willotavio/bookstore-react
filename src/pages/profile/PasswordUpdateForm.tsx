@@ -8,7 +8,7 @@ export const PasswordUpdateForm = () => {
   const { user } = useIsAuth();
   const changePassword = async (id: string, newPassword: string, confirmNewPassword: string, currentPassword: string) => {
     try{
-      const result = await Axios.post(`http://localhost:8080/auth/change-password/${id}`, {newPassword, confirmNewPassword, currentPassword}, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      await Axios.post(`http://localhost:8080/auth/change-password/${id}`, {newPassword, confirmNewPassword, currentPassword}, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
       return true;
     }
     catch(err){
@@ -28,7 +28,6 @@ export const PasswordUpdateForm = () => {
   });
 
   const onSubmit = handleSubmit( async (data) => {
-    console.log(data);
     if(data.newPassword.length >= 8 && data.newPassword === data.confirmNewPassword){
       if(await changePassword(user.id, data.newPassword, data.confirmNewPassword, data.currentPassword)){
         reset();
@@ -40,8 +39,8 @@ export const PasswordUpdateForm = () => {
     <div>
       <h2>Change Password</h2>
       <form className="defaultForm" onSubmit={onSubmit}>
-        <input type="password" {...register('newPassword')} placeholder="Password" />
-        <input type="password" {...register('confirmNewPassword')} placeholder="Confirm Password "/>
+        <input type="password" {...register('newPassword')} placeholder="New Password" />
+        <input type="password" {...register('confirmNewPassword')} placeholder="Confirm New Password "/>
         <input type="password" {...register('currentPassword')} placeholder="Current Password "/>
         <input type="submit" value="Update"/>
       </form>

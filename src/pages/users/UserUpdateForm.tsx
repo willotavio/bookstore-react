@@ -61,6 +61,7 @@ export const UserUpdateForm = () => {
       <h2>Update user <button className='closeUpdateForm' onClick={() => setSelectedUser({} as User)}>X</button></h2>
       <form className='defaultForm' onSubmit={onSubmit}>
         {selectedUser.email && <span>Editing user: {selectedUser.email}</span>}
+        <img className='profilePic' src={`http://localhost:8080/uploads/profile-pictures/${selectedUser.profilePicture ? selectedUser.id : 'null'}-profilepic.jpg`}/>
         <input type="file" {...register('profilePicture')} accept='image/*'/>
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />
         <input type="email" {...register('email')} placeholder="Email" autoComplete='off' />
