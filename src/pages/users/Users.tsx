@@ -77,7 +77,7 @@ export const Users = () => {
 
   const {data: users, refetch: refetchUsers} = useQuery(['users'], async () => {
     return await Axios.get('http://localhost:8080/user', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then((res) => {
-      return res.data;
+      return res.data.users;
     })
     .catch((err) => {
       console.log(err);

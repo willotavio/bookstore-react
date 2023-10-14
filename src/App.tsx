@@ -11,6 +11,7 @@ import { Users } from './pages/users/Users';
 import { User } from './pages/users/Users';
 import { Register } from './pages/auth/Register';
 import { Profile } from './pages/profile/Profile';
+import { Home } from './pages/Home';
 
 interface AppContextTypes{
   userLogged?: boolean;
@@ -38,7 +39,7 @@ function App() {
         <Navbar />
         <QueryClientProvider client={client}>
           <Routes>
-            <Route path='/' element={<h1>Home</h1>}/>
+            <Route path='/' element={<Home />}/>
             <Route path='/book' element={<Books />}/>
             <Route path='/author' element={<Authors />}/>
             <Route path='/user' element={<Users />}/>

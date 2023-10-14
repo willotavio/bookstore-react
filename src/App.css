@@ -1,11 +1,13 @@
 /*https://www.realtimecolors.com/?colors=f9f5fa-050406-ba92c3-2a192e-9f68ac&fonts=Poppins-Poppins*/
+/*https://www.realtimecolors.com/?colors=eaede8-12140f-b9c9ca-211d25-987976&fonts=Poppins-Poppins*/
 
 :root{
-  --text: #F9F5FA;
-  --background: #050406;
-  --primary: #BA92C3;
-  --secondary: #2A192E;
-  --accent: #9F68AC;
+  --text: #eaede8;
+  --background: #12140f;
+  --cards-background: #1b1b1b;
+  --primary: #b9c9ca;
+  --secondary: #221d26;
+  --accent: #987976;
 }
 
 .App {
@@ -22,8 +24,7 @@ body{
   color: var(--text);
 }
 
-button,
-input[type='file']::file-selector-button{
+button{
   padding: 0.2rem;
   background-color: var(--accent);
   border: none;
@@ -34,28 +35,58 @@ input[type='file']::file-selector-button:hover{
   opacity: 80%;
   cursor: pointer;
 }
-
-.listDefault{
-  margin: 1rem;
+input[type='file']::file-selector-button{
+  visibility: hidden;
 }
-.listDefault table{
+.profilePictureLabel:hover{
+  opacity: 80%;
+  cursor: pointer;
+}
+.profilePictureDiv{
+  display: flex;
+  font-size: 12px;
+  margin: 1rem 0;
+}
+
+.homeCard{
+  background-color: var(--cards-background);
+  border-radius: 0.5rem;
+  margin: 3rem 5rem;
+  padding: 3rem;
+}
+.homeCard *{
+  margin: 2rem auto;
+}
+.homeCard h1{
+  font-size: 64px;
+}
+
+.defaultTable{
+  margin: 1rem;
+  overflow-x:auto;
+}
+.defaultTable table{
   border-collapse: collapse;
   margin: auto;
   min-width: 30rem;
 }
-.listDefault table td,
-.listDefault table th{
-  border: 0.1rem solid #ddd;
+.defaultTable table td,
+.defaultTable table th{
+  border: 0.1rem solid var(--secondary);
   padding: 0.5rem;
 }
-.listDefault table thead tr{
-  background-color: var(--secondary);
+.defaultTable table thead tr{
+  background-color: var(--cards-background);
   text-align: center;
+}
+.defaultTable table td button{
+  margin: 0.3rem;
 }
 
 .navbar{
   display: flex;
-  background-color: var(--secondary);align-items: center;
+  background-color: var(--cards-background);
+  align-items: center;
   height: 3rem;
 }
 .navbar *{
@@ -81,12 +112,14 @@ input[type='file']::file-selector-button:hover{
 }
 
 .defaultForm{
+  background-color: var(--cards-background);
+  padding: 3rem;
   display: flex;
   flex-direction: column;
-  width: 30rem;
-  margin: auto;
+  width: 15rem;
+  margin: 2rem auto;
   padding-top: 1rem;
-  transition: 3s;
+  border-radius: 1rem;
 }
 .defaultForm *{
   margin-bottom: 1rem;
@@ -123,8 +156,8 @@ input[type='file']::file-selector-button:hover{
   opacity: 80%;
   cursor: pointer;
 }
-.defaultForm .closeUpdateForm{
-  padding-left: 30rem;
+.defaultForm img{
+  margin: 1rem auto;
 }
 
 .profileHeader{

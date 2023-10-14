@@ -26,8 +26,8 @@ export const AuthorAddForm = () => {
 
   return(
     <div>
-      <h2>Register new author</h2>
       <form onSubmit={onSubmit} className='defaultForm'>
+        <h2>Register new author</h2>
         <input type='text' {...register('name')} placeholder='Name' autoComplete='off' />
         <textarea {...register('biography')} placeholder='Biography' autoComplete='off' />
         <input type='date' {...register('birthDate')} />

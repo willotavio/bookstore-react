@@ -57,9 +57,12 @@ export const Register = () => {
 
   return(
     <div>
-      <h2>Create new account</h2>
       <form className='defaultForm' onSubmit={onSubmit}>
-        <input type="file" accept="image/*" {...register('profilePicture')}/>
+        <h2>Create new account</h2>
+        <div className='profilePictureDiv'>
+          <label className='profilePictureLabel' htmlFor='profilePicture'>Profile Picture</label>
+          <input type="file" id='profilePicture' {...register('profilePicture')} accept='image/*' />  
+        </div>
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />
         <input type="email" {...register('email')} placeholder="Email" autoComplete='off' />
         <input type="password" {...register('password')} placeholder="Password" autoComplete='off' />

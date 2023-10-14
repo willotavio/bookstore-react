@@ -58,11 +58,14 @@ export const UserUpdateForm = () => {
 
   return(
     <div>
-      <h2>Update user <button className='closeUpdateForm' onClick={() => setSelectedUser({} as User)}>X</button></h2>
       <form className='defaultForm' onSubmit={onSubmit}>
+        <h2>Update user <button className='closeUpdateForm' onClick={() => setSelectedUser({} as User)}>X</button></h2>
         {selectedUser.email && <span>Editing user: {selectedUser.email}</span>}
         <img className='profilePic' src={`http://localhost:8080/uploads/profile-pictures/${selectedUser.profilePicture ? selectedUser.id : 'null'}-profilepic.jpg`}/>
-        <input type="file" {...register('profilePicture')} accept='image/*'/>
+        <div className='profilePictureDiv'>
+          <label className='profilePictureLabel' htmlFor='profilePictureUpdate'>Profile Picture</label>
+          <input type="file" id='profilePictureUpdate' {...register('profilePicture')} accept='image/*' />  
+        </div>
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />
         <input type="email" {...register('email')} placeholder="Email" autoComplete='off' />
         <select {...register('role')}>

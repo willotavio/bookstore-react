@@ -15,7 +15,7 @@ export const ProfileUpdateForm = () => {
   const updateProfile = async (id: string, data: User) => {
     try{
       const result = await Axios.put(`http://localhost:8080/user/update/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
-      localStorage.setItem('user', JSON.stringify(result.data.user[0]));
+      localStorage.setItem('user', JSON.stringify(result.data.user));
       window.dispatchEvent(new Event('login'));
       return true;
     }catch(err){
@@ -63,11 +63,12 @@ export const ProfileUpdateForm = () => {
     <div>
       <h2>Update profile</h2>
       <form className='defaultForm' onSubmit={onSubmit}>
-        <input type="file" {...register('profilePicture')} accept='image/*'/>
+        <div className='profilePictureDiv'>
+          <label className='profilePictureLabel' htmlFor='profilePicture'>Profile Picture</label>
+          <input type="file" id='profilePicture' {...register('profilePicture')} accept='image/*' />  
+        </div>
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />
-        <input type="email" {...register('email')} placeholder="Email" autoComplete='off' />{/* 
-        <input type="password" {...register('password')} placeholder="Password" autoComplete='off' />
-        <input type="password" {...register('confirmPassword')} placeholder="Confirm password" autoComplete='off' /> */}
+        <input type="email" {...register('email')} placeholder="Email" autoComplete='off' />
         <input type="submit" value="Update"/>
       </form>
     </div>

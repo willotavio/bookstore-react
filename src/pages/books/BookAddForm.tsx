@@ -28,8 +28,8 @@ export const BookAddForm = () => {
 
   return(
     <div>
-      <h2>Register new book</h2>
       <form className='defaultForm' onSubmit={onSubmit}>
+        <h2>Register new book</h2>
         <input type="text" {...register('title')} placeholder="Title" autoComplete='off' />
         <textarea {...register('synopsis')} placeholder="Synopsis" autoComplete='off' />
         <input type="date" {...register('releaseDate')} placeholder="Release Date" autoComplete='off' />
@@ -38,7 +38,7 @@ export const BookAddForm = () => {
           <option value=''>Select an author</option>
           {
             authors?.map((author) => (
-              <option value={author.id}>{author.name}</option>
+              <option value={author.id} key={author.id}>{author.name}</option>
             ))
           }
         </select>

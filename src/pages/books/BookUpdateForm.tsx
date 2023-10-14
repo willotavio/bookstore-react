@@ -53,8 +53,8 @@ export const BookUpdateForm = () => {
 
   return(
     <div>
-      <h2>Update book <button className='closeUpdateForm' onClick={() => setSelectedBook({id: ''})}>X</button></h2>
       <form className='defaultForm' onSubmit={onSubmit}>
+        <h2>Update book <button className='closeUpdateForm' onClick={() => setSelectedBook({id: ''})}>X</button></h2>
         {selectedBook.title && <span>Editing book: {selectedBook.title}</span>}
         <input type="text" {...register('title')} placeholder="Title" autoComplete='off' />
         <textarea {...register('synopsis')} placeholder="Synopsis" autoComplete='off' />
@@ -64,7 +64,7 @@ export const BookUpdateForm = () => {
           <option value=''>Select an author</option>
           {
             authors?.map((author) => (
-              <option value={author.id}>{author.name}</option>
+              <option value={author.id} key={author.id}>{author.name}</option>
             ))
           }
         </select>

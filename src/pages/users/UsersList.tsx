@@ -5,7 +5,7 @@ import { User, UserContext } from './Users';
 export const UsersList = () => {
   const { users, editUser, deleteUser } = useContext(UserContext);
   return(
-    <div className='listDefault'>
+    <div className='defaultTable'>
       <table>
         <thead>
           <tr>

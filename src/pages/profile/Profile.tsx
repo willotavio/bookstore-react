@@ -11,7 +11,6 @@ export const Profile = () => {
   }
   return(
     <div className="profile">
-      <h1>Profile</h1>
       <div className="profileHeader">
         <img src={
           user.profilePicture && user.profilePicture.length > 0

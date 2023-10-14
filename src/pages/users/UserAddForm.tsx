@@ -38,9 +38,12 @@ export const UserAddForm = () => {
 
   return(
     <div>
-      <h2>Register new user</h2>
       <form className='defaultForm' onSubmit={onSubmit}>
-        <input type="file" {...register('profilePicture')} accept='image/*' />
+        <h2>Register new user</h2>
+        <div className='profilePictureDiv'>
+          <label className='profilePictureLabel' htmlFor='profilePicture'>Profile Picture</label>
+          <input type="file" id='profilePicture' {...register('profilePicture')} accept='image/*' />  
+        </div>
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />
         <input type="email" {...register('email')} placeholder="Email" autoComplete='off' />
         <select {...register('role')}>

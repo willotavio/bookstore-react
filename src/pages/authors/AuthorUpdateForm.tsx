@@ -42,8 +42,8 @@ export const AuthorUpdateForm = () => {
 
   return(
     <div>
-      <h2>Update author <button className='closeUpdateForm' onClick={() => setSelectedAuthor({id: ''} as Author)}>X</button></h2>
       <form onSubmit={onSubmit} className='defaultForm'>
+        <h2>Update author <button className='closeUpdateForm' onClick={() => setSelectedAuthor({id: ''} as Author)}>X</button></h2>
         <input type='text' {...register('name')} placeholder='Name' autoComplete='off' />
         <textarea {...register('biography')} placeholder='Biography' autoComplete='off' />
         <input type='date' {...register('birthDate')} />
