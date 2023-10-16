@@ -37,8 +37,8 @@ export const PasswordUpdateForm = () => {
 
   return(
     <div>
-      <h2>Change Password</h2>
       <form className="defaultForm" onSubmit={onSubmit}>
+        <h2>Change Password</h2>
         <input type="password" {...register('newPassword')} placeholder="New Password" />
         <input type="password" {...register('confirmNewPassword')} placeholder="Confirm New Password "/>
         <input type="password" {...register('currentPassword')} placeholder="Current Password "/>

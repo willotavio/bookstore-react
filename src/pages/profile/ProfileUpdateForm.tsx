@@ -61,10 +61,10 @@ export const ProfileUpdateForm = () => {
 
   return(
     <div>
-      <h2>Update profile</h2>
       <form className='defaultForm' onSubmit={onSubmit}>
-        <div className='profilePictureDiv'>
-          <label className='profilePictureLabel' htmlFor='profilePicture'>Profile Picture</label>
+        <h2>Update profile</h2>
+        <div className='setImageDiv'>
+          <label className='setImage' htmlFor='profilePicture'>Profile Picture</label>
           <input type="file" id='profilePicture' {...register('profilePicture')} accept='image/*' />  
         </div>
         <input type="text" {...register('name')} placeholder="Name" autoComplete='off' />

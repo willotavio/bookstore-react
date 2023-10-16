@@ -46,8 +46,8 @@ export const ProfileDeleteForm = () => {
 
   return(
     <div>
-      <h2>Delete Account</h2>
       <form className="defaultForm" onSubmit={onSubmit}>
+        <h2>Delete Account</h2>
         <input type="password" {...register('password')} placeholder="Password" />
         <input type="password" {...register('confirmPassword')} placeholder="Confirm Password "/>
         <input type="submit" value="Update"/>

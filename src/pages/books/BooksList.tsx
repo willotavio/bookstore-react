@@ -19,7 +19,7 @@ export const BooksList = () => {
         <table>
           <thead>
             <tr>
-              <th>ID</th>
+              <th>Cover Image</th>
               <th>Title</th>
               <th>Synopsis</th>
               <th>Release Date</th>
@@ -34,7 +34,9 @@ export const BooksList = () => {
           <tbody>
             {books?.map((book) => (
               <tr key={book.id}>
-                <td>{book.id}</td>
+                <td>
+                  <img className='bookCover' src={`http://localhost:8080/uploads/book-covers/${book.coverImage && book.coverImage?.length > 0 ? book.id : 'null'}-coverimage.jpg`} />
+                </td>
                 <td>{book.title}</td>
                 <td>{book.synopsis}</td>
                 <td>{book.releaseDate}</td>

@@ -37,10 +37,10 @@ export const AuthorContext = createContext<AuthorContextTypes>(
 
 export const Authors = () => {
   const { userLogged, user } = useIsAuth();
-  const { data: authors, refetch: refetchAuthors } = useQuery(['authors'], () => {
-    return Axios.get('http://localhost:8080/author').then((res) => {
-      res.data.forEach((author: Author) => author.birthDate = author.birthDate.split("T")[0]);
-      return res.data;
+  const { data: authors, refetch: refetchAuthors } = useQuery(['authors'], async () => {
+    return await Axios.get('http://localhost:8080/author').then((res) => {
+      res.data.authors.forEach((author: Author) => author.birthDate = author.birthDate.split("T")[0]);
+      return res.data.authors;
     }).catch((err) => console.log(err));
   });
 

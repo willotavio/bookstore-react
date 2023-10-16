@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useContext, useEffect } from 'react';
 import { BookContext } from './Books';
 import { Book } from './Books';
+import { handleFileSelect } from '../users/Users';
 
 export const BookUpdateForm = () => {
 
@@ -15,7 +16,8 @@ export const BookUpdateForm = () => {
     synopsis: yup.string(),
     releaseDate: yup.string(),
     price:  yup.number(),
-    authorId: yup.string()
+    authorId: yup.string(),
+    coverImage: yup.mixed()
   });
 
   const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm({
@@ -38,6 +40,15 @@ export const BookUpdateForm = () => {
     if(data.authorId && data.authorId.length > 0){
       updatedBook.authorId = data.authorId;
     }
+    if(data.coverImage.length > 0){
+      try{
+        const profilePictureBase64 = await handleFileSelect(data.coverImage);
+        updatedBook.coverImage = profilePictureBase64;
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
     if(await updateBook(selectedBook.id, updatedBook)){
       reset();
     }
@@ -56,10 +67,14 @@ export const BookUpdateForm = () => {
       <form className='defaultForm' onSubmit={onSubmit}>
         <h2>Update book <button className='closeUpdateForm' onClick={() => setSelectedBook({id: ''})}>X</button></h2>
         {selectedBook.title && <span>Editing book: {selectedBook.title}</span>}
+        <div className="setImageDiv">
+          <label className="setImage" htmlFor="bookCoverUpdate">Book Cover</label>
+          <input type="file" id="bookCoverUpdate" {...register('coverImage')} accept="image/*"/>
+        </div>
         <input type="text" {...register('title')} placeholder="Title" autoComplete='off' />
         <textarea {...register('synopsis')} placeholder="Synopsis" autoComplete='off' />
         <input type="date" {...register('releaseDate')} placeholder="Release Date" autoComplete='off' />
-        <input type="number" {...register('price')} placeholder="Price" autoComplete='off' />
+        <input type="number" {...register('price')} placeholder="Price" step="0.01" autoComplete='off' />
         <select {...register('authorId')}>
           <option value=''>Select an author</option>
           {

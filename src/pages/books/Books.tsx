@@ -13,7 +13,8 @@ export interface Book{
   synopsis?: string,
   releaseDate?: string,
   price?: number,
-  authorId?: string
+  authorId?: string,
+  coverImage?: string
 }
 
 interface BookContextTypes{
@@ -46,14 +47,14 @@ export const Books = () => {
 
   const { data: books, refetch: refetchBooks } = useQuery(['books'], async () => {
     return await Axios.get('http://localhost:8080/book').then((res) => {
-      res.data.forEach((book: Book) => book.releaseDate ? book.releaseDate = book.releaseDate.split("T")[0] : "");
-      return res.data;
+      res.data.books.forEach((book: Book) => book.releaseDate ? book.releaseDate = book.releaseDate.split("T")[0] : "");
+      return res.data.books;
     }).catch((err) => console.log(err));
   });
   const { data: authors, refetch: refetchAuthors } = useQuery(['authors'], async () => {
     return await Axios.get('http://localhost:8080/author').then((res) => {
-      res.data.forEach((author: Author) => author.birthDate ? author.birthDate = author.birthDate.split("T")[0] : "");
-      return res.data;
+      res.data.authors.forEach((author: Author) => author.birthDate ? author.birthDate = author.birthDate.split("T")[0] : "");
+      return res.data.authors;
     }).catch((err) => console.log(err));
   });
 
