@@ -60,7 +60,7 @@ export const Books = () => {
 
   const addBook = async (data: Book) => {
     try{
-      await Axios.post('http://localhost:8080/book', data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      await Axios.post('http://localhost:8080/book', data, {withCredentials: true});
       refetchBooks();
       return true;
     }
@@ -78,7 +78,7 @@ export const Books = () => {
 
   const updateBook = async (id: string, data: Book) => {
     try{
-      await Axios.put(`http://localhost:8080/book/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      await Axios.put(`http://localhost:8080/book/${id}`, data, {withCredentials: true});
       refetchBooks();
       setSelectedBook({id: ''});
       return true;
@@ -91,7 +91,7 @@ export const Books = () => {
 
   const deleteBook = async (id: string) => {
     try{
-      await Axios.delete(`http://localhost:8080/book/${id}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      await Axios.delete(`http://localhost:8080/book/${id}`, {withCredentials: true});
       refetchBooks();
       return true;
     }

@@ -11,15 +11,7 @@ export const ProfileDeleteForm = () => {
 
   const deleteProfile = async (id: string, password: string, confirmPassword: string) => {
     try{
-      await Axios.delete(`http://localhost:8080/auth/${id}`, {
-        data: {
-          password,
-          confirmPassword
-        }, 
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      await Axios.delete(`http://localhost:8080/auth/${id}`, {data: {password, confirmPassword}, withCredentials: true});
       return true;
     }
     catch(err){

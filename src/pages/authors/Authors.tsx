@@ -46,7 +46,7 @@ export const Authors = () => {
 
   const addAuthor = async (data: Author) => {
     try{
-      await Axios.post('http://localhost:8080/author', data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      await Axios.post('http://localhost:8080/author', data, {withCredentials: true});
       refetchAuthors();
       return true;
     }
@@ -63,7 +63,7 @@ export const Authors = () => {
   }
   const updateAuthor = async (id: string, data: Author) => {
     try{
-      await Axios.put(`http://localhost:8080/author/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      await Axios.put(`http://localhost:8080/author/${id}`, data, {withCredentials: true});
       refetchAuthors();
       return true;
     }
@@ -75,7 +75,7 @@ export const Authors = () => {
 
   const deleteAuthor = async (id: string) => {
     try{
-      await Axios.delete(`http://localhost:8080/author/${id}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      await Axios.delete(`http://localhost:8080/author/${id}`, {withCredentials: true});
       refetchAuthors();
       return true;
     }

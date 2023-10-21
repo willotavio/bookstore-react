@@ -76,7 +76,7 @@ export const Users = () => {
   const { userLogged, user } = useIsAuth();
 
   const {data: users, refetch: refetchUsers} = useQuery(['users'], async () => {
-    return await Axios.get('http://localhost:8080/user', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then((res) => {
+    return await Axios.get('http://localhost:8080/user', {withCredentials: true}).then((res) => {
       return res.data.users;
     })
     .catch((err) => {
@@ -86,7 +86,7 @@ export const Users = () => {
 
   const addUser = async (data: User) => {
     try{
-      await Axios.post('http://localhost:8080/user', data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+      await Axios.post('http://localhost:8080/user', data, {withCredentials: true})
       refetchUsers();
       return true;
     }
@@ -104,7 +104,7 @@ export const Users = () => {
 
   const updateUser = async (id: string, data: User) => {
     try{
-      await Axios.put(`http://localhost:8080/user/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      await Axios.put(`http://localhost:8080/user/${id}`, data, {withCredentials: true});
       refetchUsers();
       setSelectedUser({} as User);
       return true;
@@ -117,7 +117,7 @@ export const Users = () => {
   
   const deleteUser = async (id: string) => {
     try{
-      await Axios.delete(`http://localhost:8080/user/${id}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      await Axios.delete(`http://localhost:8080/user/${id}`, {withCredentials: true});
       id === user.id && logout();
       refetchUsers();
     }

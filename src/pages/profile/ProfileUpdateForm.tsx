@@ -14,7 +14,7 @@ export const ProfileUpdateForm = () => {
 
   const updateProfile = async (id: string, data: User) => {
     try{
-      const result = await Axios.put(`http://localhost:8080/user/update/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+      const result = await Axios.put(`http://localhost:8080/user/update/${id}`, data, {withCredentials: true});
       localStorage.setItem('user', JSON.stringify(result.data.user));
       window.dispatchEvent(new Event('login'));
       return true;

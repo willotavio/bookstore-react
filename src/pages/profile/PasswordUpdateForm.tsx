@@ -8,7 +8,7 @@ export const PasswordUpdateForm = () => {
   const { user } = useIsAuth();
   const changePassword = async (id: string, newPassword: string, confirmNewPassword: string, currentPassword: string) => {
     try{
-      await Axios.post(`http://localhost:8080/auth/change-password/${id}`, {newPassword, confirmNewPassword, currentPassword}, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+      await Axios.post(`http://localhost:8080/auth/change-password/${id}`, {newPassword, confirmNewPassword, currentPassword}, {withCredentials: true});
       return true;
     }
     catch(err){
